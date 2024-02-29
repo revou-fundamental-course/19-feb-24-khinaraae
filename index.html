@@ -4,46 +4,240 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Company Profile</title>
-    <link rel="stylesheet" href="css/style.css"
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js"></script>
 </head>
 <body>
+
     <header>
-        <img src="" alt="Logo">
+        <div class="circle-image" style="background-image: url('asset/kq\ ent.png');"></div>
         <ul class="navigation">
-            <li>Home</li>
-            <li>Our Profile</li>
-            <li>Message Us</li>
+            <li class="nav-item">Home</li>
+            <li class="nav-item">Our Profile</li>
+            <li class="nav-item">Our Artist</li>
+            <li class="nav-item">Message Us</li>
         </ul>
     </header>
 
+    <script>
+        const navItems = document.querySelectorAll('.nav-item');
+
+        // Add click event listener to each navigation item
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove 'selected' class from all items
+                navItems.forEach(prevItem => prevItem.classList.remove('selected'));
+
+                // Add 'selected' class to the clicked item
+                this.classList.add('selected');
+            });
+        });
+    </script>
+
+    <form name="message-form" onsubmit="return validateForm()">
+        <input type="text" placeholder="enter your name" id="name-input" name="name-input">
+        <button id="submit" type="submit">Sent</button>
+        <p id="error-name"></p>
+    </form>
+
+    <main>
+        <h1>Hi&nbsp;<span id="name">San</span>, Welcome to Kq Entertainment!</h1>
+        
+        <script>
+            const nameInput = document.getElementById('name-input');
+            const nameSpan = document.getElementById('name');
+            
+            // Function to validate the name (optional, adapt to your needs)
+            function validateForm() {
+                const name = nameInput.value.trim();
+            
+                if (!name) {
+                    // Handle empty name input (e.g., display an error message)
+                    document.getElementById('error-name').textContent = 'Please enter your name.';
+                    return false;
+                }
+            
+                return true; // Allow form submission if validation passes
+            }
+            
+            // Function to update and display the name
+            function updateName() {
+                const newName = nameInput.value.trim();
+            
+                // Store the entered name for potential future use (e.g., local storage)
+                localStorage.setItem('visitorName', newName); // Adapt storage mechanism as needed
+            
+                // Update displayed name
+                nameSpan.textContent = newName;
+            }
+            
+            // Event listener for form submission
+            nameInput.addEventListener('change', updateName);
+            
+            // Check if a stored name exists from a previous visit
+            const storedName = localStorage.getItem('visitorName');
+            if (storedName) {
+                nameInput.value = storedName; // Pre-fill input with stored name
+                updateName(); // Update displayed name
+            }
+            </script>
+        
+        <p>KQ Entertainment is a leading South Korean entertainment company, established in 2016 with a resolute commitment to cultivating artistic innovation and propelling the careers of exceptional artists. We operate under the core belief that talent should be nurtured and empowered to reach its full potential, fostering a collaborative environment where creativity thrives.</p>
+    </main>
+
+    <div class="slideshow-container">
+        <div class="mySlides fade">
+            <img src="asset/bouncy.jpg" alt="Image 1">
+        </div>
+        <div class="mySlides fade">
+            <img src="asset/tricky.jpg" alt="Image 2">
+        </div>
+        <div class="mySlides fade">
+            <img src="asset/g.jpg" alt="Image 3">
+        </div>
+
+        <a class="prev" onclick="plusDivs(-1)">&#10094;</a>
+        <a class="next" onclick="plusDivs(1)">&#10095;</a>
+    </div>
+
+    <script>
+        // Slide index (starts at 1)
+        let slideIndex = 1;
+
+        // Show slides
+        showSlides(slideIndex);
+
+        // Previous/Next button functionality
+        function plusDivs(n) {
+            showSlides(slideIndex += n);
+        }
+
+        // Current slide function
+        function showSlides(n) {
+            const slides = document.getElementsByClassName("mySlides");
+            const dots = document.getElementsByClassName("dot");
+
+            if (n > slides.length) {
+                slideIndex = 1;
+            }
+            if (n < 1) {
+                slideIndex = slides.length;
+            }
+
+            // Hide all slides
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+
+            // Remove active class from all dots
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+
+            // Show the current slide
+            slides[slideIndex - 1].style.display = "block";
+
+            // (Optional) Add active class to current slide dot (if used)
+            // dots[slideIndex - 1].className += " active";
+        }
+
+        // Automatic slideshow (optional, customize interval as needed)
+        let slideInterval = setInterval(autoSlide, 5000); // Change interval (in milliseconds)
+
+        function autoSlide() {
+            plusDivs(1);
+        }
+
+        // Stop autoplay on hover (optional)
+        const slideshowContainer = document.querySelector('.slideshow-container');
+        slideshowContainer.addEventListener('mouseover', stopAutoplay);
+        slideshowContainer.addEventListener('mouseout', startAutoplay);
+
+        function stopAutoplay() {
+            clearInterval(slideInterval);
+        }
+
+        function startAutoplay() {
+            slideInterval = setInterval(autoSlide, 5000);
+        }
+    </script>
+    
+    <h2>Our Artist</h2>
     <div class="our-office">
         <div>
             <div class="circle-image" style="background-image: url('asset/ateez\ pic.jpg');"></div>
-            <h5>    Ateez</h5>
+            <h5>Ateez</h5> 
         </div>
-        <div>
-            <div class="circle-image"></div>
+        <div class="Xikers">
+            <div class="circle-image" style="background-image: url('asset/xikers.jpg');"></div>
             <h5>Xikers</h5>
         </div>        
-        <div>
-            <div class="circle-image"></div>
+        <div class="Maddox">
+            <div class="circle-image" style="background-image: url('asset/maddox.webp');"></div>
             <h5>Maddox</h5>
         </div>
     </div>
 
-    <div class="inquiry-box">
-        <form class="inquiry-form">
-            <label for="name">Nama</label>
-            <input type="text" id="name" name="name">
-            <label for="gender">Jenis Kelamin</label>
-            <select id="gender">
-                <option value="male">Laki-laki</option>
-                <option value="male">Perempuan</option>
-            </select>
-        </form>
-        <div class="output">
-            <!--add output in here-->
+    <h2>Messsage Us</h2>
+    <div class="container">
+        <div class="form-container">
+            <form id="MyForm" action="/" method="post">
+                <label for="nama">Your Name :</label>
+                <input type="text"  id="nama" name="nama" placeholder="Input your name here" required>
+                <br>
+                <label for="tanggallahir">Date of Birth :</label>
+                <input type="date" id="tanggallahir" name="tanggallahir" required>
+                <br>
+                <label for="gender">Gender :</label>
+                <input type="radio" id="Male" name="gender" value="Male" checked>
+                <label for="Male">Male</label>
+                <input type="radio" id="Female" name="gender" value="Female">
+                <label for="Female">Female</label>
+                <br>
+                <label for="Message">Message :</label>
+                <br>
+                <textarea id="Message" name="Message" rows="4" cols="50" required></textarea>
+                <br>
+                <input type="submit" value="Kirim">
+            </form>
+        </div>
+        <div class="result-container">
+            <h3>Result</h3>
+            <b>Current Time :</b>
+            <span id="current-time"></span>
+            <p id="Nama-result"></p>
+            <p id="tanggallahir-result"></p>
+            <p id="Gender-result"></p>
+            <p id="Message-result"></p>
         </div>
     </div>
+ 
+    <script>
+        const form = document.getElementById('MyForm'); 
+        const namaResult = document.getElementById('Nama-result');
+        const tanggallahirResult = document.getElementById('tanggallahir-result');
+        const genderResult = document.getElementById('Gender-result');
+        const messageResult = document.getElementById('Message-result');
+        const currentTime = document.getElementById('current-time');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const nama = document.getElementById('nama').value
+            const tanggallahir = document.getElementById('tanggallahir').value;
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const message = document.getElementById('Message').value;
+
+            namaResult.textContent = `Your name is: ${nama}`;
+            tanggallahirResult.textContent = `Date of Birth: ${tanggallahir}`;
+            genderResult.textContent = `Gender: ${gender}`;
+            messageResult.textContent = `Message: ${message}`;
+
+            currentTime.textContent = new Date().toLocaleString();
+        });
+
+        console.log(form), console.log(namaResult)
+    </script>
+
 </body>
 </html>
